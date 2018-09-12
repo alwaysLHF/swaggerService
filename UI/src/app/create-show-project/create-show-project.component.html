@@ -1,0 +1,115 @@
+<div style="margin-left: 80%">
+    <span style="font-size: 20px">您好，{{userName}}</span>
+</div>
+
+<div style="text-align: left">
+    <button type="button" (click)="createProject()">新建项目</button>
+</div>
+
+<!-- 新建项目 模态框 -->
+<div>
+    <p-dialog [(visible)]="showCP" [width]="500" [positionTop]="200">
+        <p-header>
+            新建项目
+        </p-header>
+
+        <form #creForm="ngForm" (ngSubmit)="submitCreForm(creForm)" style="text-align: center">
+            <div>
+                <label for="projectName">项目名称</label>&nbsp;&nbsp;
+                <input type="text" [(ngModel)]="projectName" name="projectName" #proName="ngModel" required minlength="4" maxlength="12" pattern="[a-zA-Z1-9]+">
+                <!-- 数据校验 -->
+                <div *ngIf="proName.invalid && (proName.dirty || proName.touched)" class="alert alert-danger">
+                    <div *ngIf="proName.errors.required">
+                        ProjectName is required.
+                    </div>
+                    <div *ngIf="proName.errors.minlength">
+                        ProjectName must be at least 4 characters long
+                    </div>
+                    <div *ngIf="proName.errors.pattern">
+                        ProjectName must be alphabet or number
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+
+            <div>
+                <label>项目描述</label>&nbsp;&nbsp;
+                <input type="text" [(ngModel)]="description" name="desc" #desName="ngModel" required/>
+                <!-- 数据校验 -->
+                <div *ngIf="desName.invalid && (desName.dirty || desName.touched)" class="alert alert-danger">
+                    <div *ngIf="desName.errors.required">
+                        Description is required.
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+
+            <button type="submit" style="text-align: center" [disabled]="!creForm.form.valid">创建</button> &nbsp;&nbsp;&nbsp;
+            <button style="text-align: center" (click)="showCP=false">取消</button>
+        </form>
+    </p-dialog>
+</div>
+
+<br>
+
+<div style="text-align: left">
+    <button type="button" (click)="getProjectList()">获取项目列表</button>
+</div>
+
+<br>
+
+<!-- 显示项目列表 -->
+<div *ngIf="respData" style="width: 70%;">
+    <p-table [value]="respData">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>项目名称</th>
+                <th>描述</th>
+                <th>参与人</th>
+                <th>操作</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-data>
+            <tr>
+                <td><a (click)="turnToS(data.projectName)">{{data.projectName}}</a></td>
+                <td>{{data.description}}</td>
+                <td>
+                    <label *ngFor="let mem of data.member">{{mem}};&nbsp;</label>
+                </td>
+                <td>
+                    <button (click)="addMember(data)" class="btn btn-success">添加</button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<!-- 添加参与人模态框 -->
+<div>
+    <p-dialog [(visible)]="showAddMember" [width]="500" [positionTop]="200">
+        <p-header>添加参与人</p-header>
+        <form #addMemForm="ngForm" (ngSubmit)="submitAddMemForm(addMemForm)" style="text-align: center">
+            <div>
+                <label>参与人</label>&nbsp;&nbsp;
+                <input [(ngModel)]="memberName" #mem="ngModel" name="memberName" required minlength="4" maxlength="12" pattern="[a-zA-Z1-9]+">
+                <!-- 数据校验 -->
+                <div *ngIf="mem.invalid && (mem.dirty || mem.touched)">
+                    <div *ngIf="mem.errors.required">
+                        MemberName is required.
+                    </div>
+                    <div *ngIf="mem.errors.minlength">
+                        MemberName must be at least 4 characters long
+                    </div>
+                    <div *ngIf="mem.errors.pattern">
+                        MemberName must be alphabet or number
+                    </div>
+                </div>
+            </div>
+            <br>
+            <button type="submit" style="text-align: center" [disabled]="!addMemForm.form.valid">添加</button> &nbsp;&nbsp;&nbsp;
+            <button style="text-align: center" (click)="showAddMember=false">取消</button>
+        </form>
+    </p-dialog>
+</div>

@@ -1,0 +1,118 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "0.0.1",
+        "title": "react-my"
+    },
+    "host": "localhost:swagger",
+    "tags": [{
+        "name": "test",
+        "description": "测试接口"
+    }],
+    "paths": {
+        "/test/login": {
+            "post": {
+                "tags": [
+                    "test"
+                ],
+                "summary": "登录接口",
+                "parameters": [{
+                    "name": "param",
+                    "in": "body",
+                    "description": "登录接口参数",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/loginParam"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/test/portal": {
+            "post": {
+                "tags": [
+                    "test"
+                ],
+                "summary": "选择系统接口",
+                "parameters": [{
+                    "name": "param",
+                    "in": "body",
+                    "description": "选择系统接口参数",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/portalParam"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/test/home": {
+            "post": {
+                "tags": [
+                    "test"
+                ],
+                "summary": "首页接口",
+                "parameters": [{
+                    "name": "param",
+                    "in": "body",
+                    "description": "首页接口参数",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/homeParam"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "loginParam": {
+            "properties": {
+                "username": {
+                    "type": "string",
+                    "default": "admin"
+                },
+                "password": {
+                    "type": "string",
+                    "default": "test@123"
+                }
+            },
+            "required": [
+                "username",
+                "password"
+            ]
+        },
+        "portalParam": {
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id"
+            ]
+        },
+        "homeParam": {
+            "properties": {
+                "userid": {
+                    "type": "string"
+                },
+                "systemid": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

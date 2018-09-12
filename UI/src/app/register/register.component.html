@@ -1,0 +1,66 @@
+<h1>用户注册</h1>
+<div class="login-form">
+    <div class="head-info">
+        <label class="lbl-1"> </label>
+        <label class="lbl-2"> </label>
+        <label class="lbl-3"> </label>
+      </div>
+  <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" style="text-align: center">
+    <div>
+      <label for="userName">&nbsp;用户名&nbsp;&nbsp;</label>
+      <input id="userName" type="text" [(ngModel)]="userName" name="userName" #user="ngModel" required minlength="4" maxlength="12"
+        pattern="[a-zA-Z1-9]+">
+      <!-- 数据校验 -->
+      <div *ngIf="user.invalid && (user.dirty || user.touched)" class="alert alert-danger">
+        <div *ngIf="user.errors.required">
+          UserName is required.
+        </div>
+        <div *ngIf="user.errors.minlength">
+          UserName must be at least 4 characters long
+        </div>
+        <div *ngIf="user.errors.pattern">
+          UserName must be alphabet or number
+        </div>
+      </div>
+    </div>
+
+    <br/>
+
+    <div>
+      <label for="password">&nbsp;&nbsp;&nbsp;&nbsp;密码&nbsp;&nbsp;&nbsp;</label>
+      <input id="password" type="password" [(ngModel)]="password" name="password" #pwd="ngModel" required minlength="4" maxlength="12"
+        pattern="[a-zA-Z1-9]+">
+      <!-- 数据校验 -->
+      <div *ngIf="pwd.invalid && (pwd.dirty || pwd.touched)" class="alert alert-danger">
+        <div *ngIf="pwd.errors.required">
+          Password is required.
+        </div>
+        <div *ngIf="pwd.errors.minlength">
+          Password must be at least 4 characters long
+        </div>
+        <div *ngIf="pwd.errors.pattern">
+          Password must be alphabet or number
+        </div>
+      </div>
+    </div>
+
+    <br/>
+
+    <div>
+      <label for="rePassword">确认密码</label>
+      <input id="rePassword" type="password" [(ngModel)]="rePassword" #repwd="ngModel" name="rePassword">
+
+      <!-- 数据校验 -->
+      <div *ngIf="(password !== rePassword) && (repwd.dirty || repwd.touched)" class="alert alert-danger">
+        <p>密码不一致</p>
+      </div>
+    </div>
+    <br>
+
+    <button type="submit" [disabled]="!registerForm.form.valid || password !== rePassword">&nbsp;&nbsp;&nbsp;创建&nbsp;&nbsp;&nbsp;</button> 
+    &nbsp;&nbsp;&nbsp;
+    <button type="button"  (click)="goBack()">返回</button>
+  </form>
+
+
+</div>
